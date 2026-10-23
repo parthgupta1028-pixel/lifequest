@@ -1,4 +1,4 @@
-﻿name: Build Android APK
+name: Build Android APK
 
 on:
   push:
@@ -20,14 +20,20 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
+      - name: Make Gradle Wrapper Executable
+        run: chmod +x frontend/android/gradlew
+
       - name: Install Frontend Dependencies
         working-directory: ./frontend
-        run: npm ci
+        run: npm install
 
       - name: Build Web Application
         working-directory: ./frontend
@@ -35,15 +41,11 @@ jobs:
 
       - name: Sync Capacitor Android
         working-directory: ./frontend
-        run: npx cap sync android
-
-      - name: Grant Execute Permission to Gradle
-        working-directory: ./frontend/android
-        run: chmod +x gradlew
+        run: npm run cap:sync
 
       - name: Build Debug APK
         working-directory: ./frontend/android
-        run: ./gradlew assembleDebug --stacktrace
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
 
       - name: Upload APK to GitHub Artifacts
         uses: actions/upload-artifact@v4
