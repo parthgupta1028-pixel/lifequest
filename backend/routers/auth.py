@@ -101,3 +101,19 @@ def get_me(current_user: User = Depends(get_current_user)):
         "created_at": current_user.created_at,
         "level_progress": prog
     }
+
+@router.post("/reset-my-progress")
+def reset_my_progress(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """Allows any logged-in user to reset their own progress (XP, level, streaks, tasks) back to 0."""
+    from services.admin_service import AdminService
+    user = AdminService.reset_user_progress(db, target_user_id=current_user.id)
+    return {
+        "success": True,
+        "message": "Your progress has been completely reset to Level 1 with 0 XP.",
+        "level": user.level,
+        "total_xp": user.total_xp,
+        "current_streak": user.current_streak
+    }

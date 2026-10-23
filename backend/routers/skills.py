@@ -130,6 +130,24 @@ def add_rest_day(
     if existing:
         return existing
 
+    # Enforce maximum 3 rest days per calendar week (Monday to Sunday)
+    start_of_week = data.rest_date - datetime.timedelta(days=data.rest_date.weekday())
+    end_of_week = start_of_week + datetime.timedelta(days=6)
+    week_rest_count = (
+        db.query(RestDay)
+        .filter(
+            RestDay.user_id == current_user.id,
+            RestDay.rest_date >= start_of_week,
+            RestDay.rest_date <= end_of_week
+        )
+        .count()
+    )
+    if week_rest_count >= 3:
+        raise HTTPException(
+            status_code=400,
+            detail="Weekly rest day limit reached! You can only take up to 3 rest days in a week to maintain your streak."
+        )
+
     rest = RestDay(
         user_id=current_user.id,
         rest_date=data.rest_date,

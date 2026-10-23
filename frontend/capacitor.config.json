@@ -1,0 +1,14 @@
+﻿{
+  "appId": "io.lifequest.app",
+  "appName": "LifeQuest",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "LocalNotifications": {
+      "iconColor": "#06B6D4"
+    }
+  }
+}

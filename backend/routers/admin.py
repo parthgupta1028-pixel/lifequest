@@ -75,3 +75,24 @@ def update_user_role(
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     except LookupError as e:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+
+@router.post("/users/{user_id}/reset-progress")
+def reset_user_progress_endpoint(
+    user_id: int,
+    db: Session = Depends(get_db),
+    admin: User = Depends(require_admin)
+):
+    """Resets all progress metrics (XP, level, streak, completed tasks) for a user."""
+    try:
+        user = AdminService.reset_user_progress(db, target_user_id=user_id)
+        return {
+            "success": True,
+            "user_id": user.id,
+            "username": user.username,
+            "level": user.level,
+            "total_xp": user.total_xp,
+            "current_streak": user.current_streak,
+            "message": f"All progress for user '{user.username}' has been successfully reset to 0."
+        }
+    except LookupError as e:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))

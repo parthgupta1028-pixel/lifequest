@@ -40,11 +40,27 @@ class StreakService:
             # Consecutive day!
             user.current_streak += 1
         elif day_diff > 1:
-            # Check if all skipped days were Rest Days
+            # Check if all skipped days were valid Rest Days (Max 3 rest days per week)
             all_rest = True
             for i in range(1, day_diff):
                 check_date = user.last_active_date + datetime.timedelta(days=i)
                 if not StreakService.is_date_rest_day(db, user.id, check_date):
+                    all_rest = False
+                    break
+                
+                # Check maximum 3 rest days allowed in this calendar week
+                start_of_week = check_date - datetime.timedelta(days=check_date.weekday())
+                end_of_week = start_of_week + datetime.timedelta(days=6)
+                week_rest_count = (
+                    db.query(RestDay)
+                    .filter(
+                        RestDay.user_id == user.id,
+                        RestDay.rest_date >= start_of_week,
+                        RestDay.rest_date <= end_of_week
+                    )
+                    .count()
+                )
+                if week_rest_count > 3:
                     all_rest = False
                     break
 
@@ -64,8 +80,61 @@ class StreakService:
         return user.current_streak, user.best_streak
 
     @staticmethod
+    def check_and_decay_streak(db: Session, user: User) -> int:
+        """
+        Passively checks if streak has broken due to inactivity.
+        If yesterday was skipped and was NOT a valid rest day (or > 3 rest days in that week),
+        the streak is broken and resets to 0.
+        """
+        if user.current_streak == 0 or user.last_active_date is None:
+            return 0
+
+        today = datetime.date.today()
+        if user.last_active_date >= today:
+            return user.current_streak
+
+        yesterday = today - datetime.timedelta(days=1)
+        if user.last_active_date == yesterday:
+            # Yesterday was active, streak is currently alive waiting for today's activity
+            return user.current_streak
+
+        # If last active was before yesterday, check intervening days
+        cur_date = user.last_active_date + datetime.timedelta(days=1)
+        streak_valid = True
+
+        while cur_date <= yesterday:
+            if not StreakService.is_date_rest_day(db, user.id, cur_date):
+                streak_valid = False
+                break
+
+            # Enforce max 3 rest days in that calendar week
+            start_of_week = cur_date - datetime.timedelta(days=cur_date.weekday())
+            end_of_week = start_of_week + datetime.timedelta(days=6)
+            week_rest_count = (
+                db.query(RestDay)
+                .filter(
+                    RestDay.user_id == user.id,
+                    RestDay.rest_date >= start_of_week,
+                    RestDay.rest_date <= end_of_week
+                )
+                .count()
+            )
+            if week_rest_count > 3:
+                streak_valid = False
+                break
+
+            cur_date += datetime.timedelta(days=1)
+
+        if not streak_valid:
+            user.current_streak = 0
+            db.commit()
+
+        return user.current_streak
+
+    @staticmethod
     def get_streak_summary(db: Session, user: User) -> Dict[str, Any]:
-        """Returns comprehensive streak info."""
+        """Returns comprehensive streak info with passive streak validation."""
+        StreakService.check_and_decay_streak(db, user)
         today = datetime.date.today()
         productive_days = (
             db.query(DailyStat)

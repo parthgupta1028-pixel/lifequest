@@ -11,9 +11,10 @@ import DailyMissionCard from '../components/dashboard/DailyMissionCard';
 import TaskCard from '../components/tasks/TaskCard';
 import TaskModal from '../components/tasks/TaskModal';
 import TaskTimerModal from '../components/tasks/TaskTimerModal';
+import StreakWarningBanner from '../components/dashboard/StreakWarningBanner';
 import { Plus, ListFilter, Sparkles, CheckCircle2 } from 'lucide-react';
 
-const DashboardPage = ({ onNavigateSkills }) => {
+const DashboardPage = ({ onNavigateSkills, onNavigateSettings }) => {
   const { user, refreshUser } = useAuth();
   const { triggerLevelUp, triggerAchievement } = useGame();
 
@@ -108,6 +109,12 @@ const DashboardPage = ({ onNavigateSkills }) => {
 
   return (
     <div className="space-y-6 pb-16 md:pb-8">
+      {/* Streak in Danger Urgency Banner */}
+      <StreakWarningBanner 
+        streak={dashboardData?.streak} 
+        onNavigateRestDay={onNavigateSettings}
+      />
+
       {/* 1. Hero Level & XP Banner */}
       <HeroLevelCard user={dashboardData?.user || user} />
 

@@ -43,6 +43,18 @@ def get_dashboard(
     today_xp = sum(inst.xp_awarded for inst in instances if inst.status == "COMPLETED")
     productive_minutes = sum(inst.actual_duration for inst in instances)
 
+    # 5b. Streak risk telemetry
+    now = datetime.datetime.now()
+    midnight = datetime.datetime.combine(today + datetime.timedelta(days=1), datetime.time.min)
+    hours_left = max(0.0, round((midnight - now).total_seconds() / 3600.0, 1))
+    is_streak_at_risk = (
+        streak_info.get("current_streak", 0) > 0
+        and completed_count == 0
+        and not streak_info.get("is_today_rest", False)
+    )
+    streak_info["is_at_risk"] = is_streak_at_risk
+    streak_info["hours_until_midnight"] = hours_left
+
     # 6. Daily mission
     mission = MissionService.get_or_create_daily_mission(db, current_user, today)
     mission_items = json.loads(mission.items_json) if mission.items_json else []

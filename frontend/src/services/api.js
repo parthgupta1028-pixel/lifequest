@@ -39,6 +39,7 @@ export const authAPI = {
   register: (data) => api.post('/auth/register', data),
   login: (data) => api.post('/auth/login', data),
   getMe: () => api.get('/auth/me'),
+  resetMyProgress: () => api.post('/auth/reset-my-progress'),
 };
 
 export const dashboardAPI = {
@@ -83,6 +84,7 @@ export const adminAPI = {
   getUsers: (params) => api.get('/admin/users', { params }),
   toggleUserActive: (userId) => api.post(`/admin/users/${userId}/toggle-active`),
   updateUserRole: (userId, data) => api.post(`/admin/users/${userId}/role`, data),
+  resetUserProgress: (userId) => api.post(`/admin/users/${userId}/reset-progress`),
 };
 
 export const streaksAPI = {

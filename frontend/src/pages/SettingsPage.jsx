@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useGame } from '../context/GameContext';
 import { useTheme } from '../context/ThemeContext';
-import { restDaysAPI } from '../services/api';
+import { authAPI, restDaysAPI } from '../services/api';
 import { 
   Settings, 
   Volume2, 
@@ -13,15 +13,19 @@ import {
   User, 
   ShieldCheck, 
   Palette, 
-  Check 
+  Check,
+  RotateCcw,
+  AlertTriangle
 } from 'lucide-react';
 
 const SettingsPage = () => {
-  const { user } = useAuth();
+  const { user, refreshUser } = useAuth();
   const { soundEnabled, setSoundEnabled } = useGame();
   const { theme, setTheme } = useTheme();
   const [restDays, setRestDays] = useState([]);
   const [loadingRest, setLoadingRest] = useState(false);
+  const [resetting, setResetting] = useState(false);
+  const [resetMessage, setResetMessage] = useState('');
 
   useEffect(() => {
     loadRestDays();
@@ -222,6 +226,46 @@ const SettingsPage = () => {
             ))}
           </div>
         )}
+      </div>
+
+      {/* Danger Zone: Reset Progress */}
+      <div className="quest-card p-6 border-rose-500/30 bg-rose-500/5">
+        <h3 className="text-base font-bold font-display text-rose-600 dark:text-rose-400 mb-2 flex items-center gap-2">
+          <AlertTriangle className="w-4 h-4 text-rose-500" />
+          Reset Game Progress (Fresh Start)
+        </h3>
+        <p className="text-xs text-slate-600 dark:text-slate-400 mb-4">
+          Want a completely clean start? Reset your Total XP back to 0, Level to 1, Streaks to 0, and clear all completed tasks. Your custom skill definitions and account will remain safe.
+        </p>
+
+        {resetMessage && (
+          <div className="mb-4 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-xs text-emerald-500 font-semibold">
+            {resetMessage}
+          </div>
+        )}
+
+        <button
+          onClick={async () => {
+            if (window.confirm("⚠️ ARE YOU SURE?\n\nThis will permanently reset your Total XP to 0, Level to 1, Streaks to 0, and clear your completed tasks list!")) {
+              try {
+                setResetting(true);
+                setResetMessage('');
+                await authAPI.resetMyProgress();
+                await refreshUser();
+                setResetMessage('All progress successfully reset! You are now Level 1 with 0 XP.');
+              } catch (err) {
+                alert(err.response?.data?.detail || 'Failed to reset progress.');
+              } finally {
+                setResetting(false);
+              }
+            }
+          }}
+          disabled={resetting}
+          className="px-4 py-2.5 bg-rose-500 hover:bg-rose-600 text-white rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-sm disabled:opacity-50"
+        >
+          <RotateCcw className={`w-4 h-4 ${resetting ? 'animate-spin' : ''}`} />
+          {resetting ? 'Resetting Progress...' : 'Reset My Progress to Level 1 (0 XP)'}
+        </button>
       </div>
     </div>
   );

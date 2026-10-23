@@ -24,13 +24,13 @@ const LoginPage = ({ onSwitchToRegister }) => {
 
   const handleQuickDemo = async () => {
     setUsernameOrEmail('quest_hero');
-    setPassword('secretpassword123');
+    setPassword('demo123');
     setError('');
     setLoading(true);
     try {
-      await login('quest_hero', 'secretpassword123');
+      await login('quest_hero', 'demo123');
     } catch (err) {
-      setError(err.response?.data?.detail || 'Demo login failed');
+      setError(err.response?.data?.detail || 'Demo login failed. Make sure the backend server is running.');
     } finally {
       setLoading(false);
     }
