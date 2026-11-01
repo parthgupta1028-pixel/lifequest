@@ -12,8 +12,8 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 days
     
     # Database
-    # Primary: PostgreSQL. Fallback will handle SQLite automatically if PostgreSQL is unreachable.
-    DATABASE_URL: str = "postgresql+psycopg2://postgres:postgres@localhost:5432/lifequest_db"
+    # Primary: MySQL (port 3306). Fallback will handle SQLite automatically if MySQL is unreachable.
+    DATABASE_URL: str = "mysql+pymysql://root:password@localhost:3306/lifequest_db"
     SQLITE_FALLBACK_URL: str = "sqlite:///./lifequest.db"
     
     class Config:

@@ -1,4 +1,4 @@
-﻿import { LocalNotifications } from '@capacitor/local-notifications';
+import { LocalNotifications } from '@capacitor/local-notifications';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
 export const isCapacitor = () => {
@@ -64,13 +64,45 @@ export const NotificationService = {
           ]
         });
       } else if ('Notification' in window && Notification.permission === 'granted') {
-        new Notification(title, {
+        // Play notification sound so user hears it even while using other applications
+        NotificationService.playNotificationSound();
+
+        const notif = new Notification(title, {
           body,
-          icon: '/favicon.ico'
+          icon: '/favicon.ico',
+          requireInteraction: true, // Keeps notification visible on top of other apps until user interacts
+          tag: 'lifequest-alert'
         });
+
+        notif.onclick = () => {
+          window.focus();
+          notif.close();
+        };
       }
     } catch (e) {
       console.warn('Error showing notification:', e);
+    }
+  },
+
+  playNotificationSound() {
+    try {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (AudioContextClass) {
+        const ctx = new AudioContextClass();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
+        osc.frequency.setValueAtTime(880, ctx.currentTime + 0.1); // A5
+        gain.gain.setValueAtTime(0.2, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.4);
+      }
+    } catch (e) {
+      // Audio autoplay policy
     }
   },
 

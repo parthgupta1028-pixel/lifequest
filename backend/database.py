@@ -12,19 +12,21 @@ Base = declarative_base()
 def get_engine():
     target_url = settings.DATABASE_URL
     try:
-        # Check if postgres
-        if target_url.startswith("postgresql"):
-            # Test connection with a quick pool timeout
-            engine = create_engine(target_url, pool_pre_ping=True, connect_args={"connect_timeout": 3})
+        # Check if MySQL or PostgreSQL
+        if target_url.startswith("mysql") or target_url.startswith("postgresql"):
+            connect_args = {"connect_timeout": 3}
+            engine = create_engine(target_url, pool_pre_ping=True, connect_args=connect_args)
             with engine.connect() as conn:
-                logger.info("Successfully connected to PostgreSQL database.")
+                db_type = "MySQL" if target_url.startswith("mysql") else "PostgreSQL"
+                logger.info(f"Successfully connected to {db_type} database.")
                 return engine
         else:
             engine = create_engine(target_url)
             return engine
     except Exception as e:
+        db_type = "MySQL" if target_url.startswith("mysql") else "PostgreSQL"
         logger.warning(
-            f"Could not connect to PostgreSQL at '{target_url}' ({e}). "
+            f"Could not connect to {db_type} at '{target_url}' ({e}). "
             f"Falling back to local SQLite database: '{settings.SQLITE_FALLBACK_URL}'"
         )
         return create_engine(
