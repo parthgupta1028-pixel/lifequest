@@ -75,8 +75,8 @@ LifeQuest is a modern, responsive full-stack productivity web and mobile platfor
 ## 🔑 Login & Account Credentials
 
 ### 🛡️ Master Admin Account
-- **Username / Email**: `parth` / `parthgupta1001pg@gmail.com`
-- **Password**: `P@rth1028`
+- **Username / Email**: 
+- **Password**: 
 - **Access**: Full platform access + dedicated **Admin Panel** for user management & telemetry KPIs.
 
 ### 🎮 Demo / Trial User Account
