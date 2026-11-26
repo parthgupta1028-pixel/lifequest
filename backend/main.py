@@ -20,21 +20,24 @@ from services.task_service import TaskService
 from services.achievement_service import AchievementService
 from migrate_db import run_migration
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    # Startup: Ensure migration applied, create tables and seed system defaults
+def init_db_and_seed():
     try:
         run_migration()
     except Exception as e:
         print(f"[STARTUP] Migration warning: {e}")
-    Base.metadata.create_all(bind=engine)
-    db = SessionLocal()
     try:
-        SkillService.ensure_default_skills(db)
-        TaskService.ensure_default_categories(db)
-        AchievementService.ensure_default_achievements(db)
-    finally:
-        db.close()
+        Base.metadata.create_all(bind=engine)
+        from seed_accounts import seed
+        seed()
+    except Exception as e:
+        print(f"[STARTUP] Seeding warning: {e}")
+
+# Initialize database and default accounts immediately on module load
+init_db_and_seed()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    init_db_and_seed()
     yield
 
 app = FastAPI(
