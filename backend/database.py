@@ -25,12 +25,18 @@ def get_engine():
             return engine
     except Exception as e:
         db_type = "MySQL" if target_url.startswith("mysql") else "PostgreSQL"
+        fallback_url = settings.SQLITE_FALLBACK_URL
+        if fallback_url.startswith("sqlite:///."):
+            backend_dir = os.path.dirname(os.path.abspath(__file__))
+            db_file = os.path.join(backend_dir, "lifequest.db").replace("\\", "/")
+            fallback_url = f"sqlite:///{db_file}"
+
         logger.warning(
             f"Could not connect to {db_type} at '{target_url}' ({e}). "
-            f"Falling back to local SQLite database: '{settings.SQLITE_FALLBACK_URL}'"
+            f"Falling back to local SQLite database: '{fallback_url}'"
         )
         return create_engine(
-            settings.SQLITE_FALLBACK_URL, 
+            fallback_url, 
             connect_args={"check_same_thread": False}
         )
 
