@@ -26,7 +26,16 @@ def get_engine():
     except Exception as e:
         db_type = "MySQL" if target_url.startswith("mysql") else "PostgreSQL"
         fallback_url = settings.SQLITE_FALLBACK_URL
-        if fallback_url.startswith("sqlite:///."):
+        if os.environ.get("VERCEL"):
+            tmp_db = "/tmp/lifequest.db"
+            if not os.path.exists(tmp_db):
+                backend_dir = os.path.dirname(os.path.abspath(__file__))
+                src_db = os.path.join(backend_dir, "lifequest.db")
+                if os.path.exists(src_db):
+                    import shutil
+                    shutil.copy(src_db, tmp_db)
+            fallback_url = f"sqlite:///{tmp_db}"
+        elif fallback_url.startswith("sqlite:///."):
             backend_dir = os.path.dirname(os.path.abspath(__file__))
             db_file = os.path.join(backend_dir, "lifequest.db").replace("\\", "/")
             fallback_url = f"sqlite:///{db_file}"

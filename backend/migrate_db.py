@@ -3,6 +3,8 @@ import sqlite3
 import datetime
 
 DB_PATH = os.path.join(os.path.dirname(__file__), "lifequest.db")
+if os.environ.get("VERCEL"):
+    DB_PATH = "/tmp/lifequest.db"
 
 def run_migration():
     print(f"[MIGRATION] Checking database at: {DB_PATH}")
