@@ -23,6 +23,7 @@ yarn-error.log*
 # Cloudflared & Temp
 cloudflared.exe
 *.log
+/lifequest.db
 
 # IDE & OS
 .vscode/

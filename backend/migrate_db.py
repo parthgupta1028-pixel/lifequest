@@ -26,8 +26,9 @@ def run_migration():
         print("[MIGRATION] Adding column 'is_active' to users...")
         c.execute("ALTER TABLE users ADD COLUMN is_active BOOLEAN DEFAULT 1")
 
-    # Set initial admins: quest_hero and parth
-    c.execute("UPDATE users SET role = 'admin' WHERE id = 1 OR username = 'quest_hero' OR username = 'parth'")
+    # Set Master Admin: parth, and Standard User: quest_hero
+    c.execute("UPDATE users SET role = 'admin' WHERE username = 'parth'")
+    c.execute("UPDATE users SET role = 'user' WHERE username = 'quest_hero'")
     c.execute("UPDATE users SET is_active = 1 WHERE is_active IS NULL")
     conn.commit()
 

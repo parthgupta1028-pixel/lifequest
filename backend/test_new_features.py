@@ -14,6 +14,9 @@ def test_features():
     db = SessionLocal()
     # Find admin user
     admin_user = db.query(User).filter(User.role == "admin").first()
+    if not admin_user:
+        admin_user = db.query(User).filter(User.username == "parth").first()
+    assert admin_user is not None, "Admin user must exist in database"
     print(f"Found admin user: {admin_user.username} (id: {admin_user.id}, role: {admin_user.role})")
     db.close()
 

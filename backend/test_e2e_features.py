@@ -17,7 +17,7 @@ client = TestClient(app)
 def test_full_flow():
     db = SessionLocal()
     # 1. Check admin user
-    admin = db.query(User).filter(User.username == "quest_hero").first()
+    admin = db.query(User).filter(User.username == "parth").first()
     if not admin:
         admin = db.query(User).filter(User.role == "admin").first()
     assert admin is not None, "Admin user must exist"

@@ -20,19 +20,30 @@ from auth.jwt import create_access_token
 def test_full_pipeline():
     print("=== STARTING LIFEQUEST BACKEND INTEGRATION TEST ===")
     
-    # 1. Initialize Tables & Seeds
-    Base.metadata.drop_all(bind=engine)
-    Base.metadata.create_all(bind=engine)
-    db = SessionLocal()
+    # 1. Initialize Tables & Seeds in an isolated in-memory SQLite database
+    from sqlalchemy import create_engine
+    from sqlalchemy.orm import sessionmaker
+    from sqlalchemy.pool import StaticPool
+
+    test_engine = create_engine(
+        "sqlite:///:memory:",
+        connect_args={"check_same_thread": False},
+        poolclass=StaticPool
+    )
+    Base.metadata.create_all(bind=test_engine)
+    TestSession = sessionmaker(autocommit=False, autoflush=False, bind=test_engine)
+    db = TestSession()
 
     SkillService.ensure_default_skills(db)
     TaskService.ensure_default_categories(db)
     AchievementService.ensure_default_achievements(db)
 
-    skills = db.query(Skill).all()
     categories = db.query(Category).all()
-    print(f"[OK] Seeded {len(skills)} core skills and {len(categories)} default categories.")
-    assert len(skills) == 6, f"Expected 6 skills, got {len(skills)}"
+    from models.achievement import Achievement
+    achievements = db.query(Achievement).all()
+    print(f"[OK] Seeded {len(categories)} default categories and {len(achievements)} achievements.")
+    assert len(categories) > 0, "Default categories should be seeded"
+    assert len(achievements) > 0, "Default achievements should be seeded"
 
     # 2. Register User
     pwd = "secretpassword123"
@@ -60,7 +71,7 @@ def test_full_pipeline():
 
     # 3. Create Tasks
     coding_cat = db.query(Category).filter(Category.name == "Coding").first()
-    coding_skill = db.query(Skill).filter(Skill.name == "Coding").first()
+    coding_skill = db.query(Skill).filter(Skill.user_id == user.id, Skill.name == "Coding").first()
 
     from schemas.task import TaskCreate
     task_data = TaskCreate(
