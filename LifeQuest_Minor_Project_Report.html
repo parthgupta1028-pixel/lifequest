@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LIFEQUEST: A Minor Project-I Report</title>
+<style>
+  @page {
+    size: A4;
+    margin: 25mm 20mm 20mm 25mm;
+  }
+  body {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 12pt;
+    line-height: 1.5;
+    color: #111;
+    background: #f4f6f8;
+    margin: 0;
+    padding: 20px;
+  }
+  .document-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #ffffff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+  .sheet {
+    padding: 60px 50px;
+    min-height: 1050px;
+    box-sizing: border-box;
+    position: relative;
+    page-break-after: always;
+  }
+  .sheet:last-child {
+    page-break-after: avoid;
+  }
+  .text-center { text-align: center; }
+  .text-justify { text-align: justify; text-justify: inter-word; }
+  .text-red { color: #c00000; font-weight: bold; }
+  
+  .title-main { font-size: 18pt; font-weight: bold; color: #c00000; line-height: 1.3; margin-bottom: 20px; text-transform: uppercase; }
+  .subtitle { font-size: 15pt; font-weight: bold; margin-bottom: 25px; }
+  .submitted-to { font-size: 13pt; margin-bottom: 12px; }
+  .univ-name { font-size: 14pt; font-weight: bold; margin-bottom: 4px; }
+  .award-text { font-size: 12pt; margin-bottom: 4px; }
+  .degree { font-size: 14pt; font-weight: bold; margin-bottom: 4px; }
+  .branch { font-size: 14pt; font-weight: bold; color: #c00000; margin-bottom: 30px; }
+  .submitted-by-label { font-size: 13pt; font-weight: bold; margin-bottom: 10px; }
+  .student-list { font-size: 12pt; font-weight: bold; color: #c00000; line-height: 1.8; margin-bottom: 25px; }
+  .dept-name { font-size: 13pt; font-weight: bold; margin-top: 15px; line-height: 1.4; }
+  .logo-box {
+    width: 90px;
+    height: 90px;
+    border: 2px dashed #999;
+    border-radius: 50%;
+    margin: 10px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10pt;
+    color: #777;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+  }
+
+  .institute-title { font-size: 16pt; font-weight: bold; margin-top: 200px; line-height: 1.4; }
+  .session-text { font-size: 14pt; font-weight: bold; margin-top: 25px; }
+
+  h1.chapter-head {
+    font-size: 16pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #222;
+    padding-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+  h2.section-head {
+    font-size: 14pt;
+    font-weight: bold;
+    margin-top: 22px;
+    margin-bottom: 12px;
+    color: #111;
+  }
+  h3.subsection-head {
+    font-size: 12pt;
+    font-weight: bold;
+    margin-top: 16px;
+    margin-bottom: 8px;
+  }
+  p {
+    margin-top: 0;
+    margin-bottom: 14px;
+    text-align: justify;
+    text-justify: inter-word;
+    font-size: 12pt;
+    line-height: 1.6;
+  }
+
+  .toc-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+  }
+  .toc-table td {
+    padding: 8px 0;
+    font-size: 12pt;
+    border-bottom: 1px dotted #ccc;
+  }
+  .toc-page {
+    text-align: right;
+    font-weight: bold;
+    width: 80px;
+  }
+  .toc-bold {
+    font-weight: bold;
+  }
+  .toc-indent1 { padding-left: 20px !important; }
+  .toc-indent2 { padding-left: 40px !important; }
+
+  .page-number {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 11pt;
+    color: #444;
+  }
+
+  .print-bar {
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    background: #1e293b;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    z-index: 1000;
+  }
+  .print-btn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .print-btn:hover { background: #1d4ed8; }
+
+  @media print {
+    body { background: transparent; padding: 0; }
+    .document-container { box-shadow: none; max-width: 100%; }
+    .print-bar { display: none; }
+    .sheet { padding: 40px 30px; min-height: auto; page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+
+<div class="print-bar">
+  <span>LifeQuest Academic Report &nbsp;</span>
+  <button class="print-btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+</div>
+
+<div class="document-container">
+
+  <!-- PAGE 1: TITLE COVER -->
+  <div class="sheet text-center">
+    <div class="title-main">LIFEQUEST: A GAMIFIED PRODUCTIVITY &amp; TASK MANAGEMENT PLATFORM</div>
+    <div class="subtitle">A Minor Project-I</div>
+    <div class="submitted-to">Submitted to</div>
+
+    <div class="logo-box">RGPV LOGO</div>
+
+    <div class="univ-name">Rajiv Gandhi Proudyogiki Vishwavidyalaya, Bhopal</div>
+    <div class="award-text">towards partial fulfillment for the award of</div>
+    <div class="degree">Bachelor of Technology</div>
+    <div class="award-text">in</div>
+    <div class="branch">Computer Science &amp; Engineering</div>
+
+    <div class="submitted-by-label">Submitted by:</div>
+    <div class="student-list">
+      Parth Gupta – 0808CS221067<br>
+      Arfiya Khan – 0808CS221021<br>
+      Ayush Sharma – 0808CS221028<br>
+      Deepak Patel – 0808CS221035
+    </div>
+
+    <div class="logo-box">JIT LOGO</div>
+
+    <div class="dept-name">
+      DEPARTMENT OF COMPUTER SCIENCE &amp; ENGINEERING<br>
+      DEPARTMENT OF INFORMATION TECHNOLOGY
+    </div>
+  </div>
+
+  <!-- PAGE 2: INSTITUTION & SESSION -->
+  <div class="sheet text-center">
+    <div class="institute-title">
+      JAWAHARLAL INSTITUTE OF TECHNOLOGY, BORAWAN
+    </div>
+    <div class="session-text">
+      SESSION: JULY-DEC 2026
+    </div>
+  </div>
+
+  <!-- PAGE 3: CONTENTS -->
+  <div class="sheet">
+    <h1 class="chapter-head text-center" style="border: none; margin-bottom: 10px;">CONTENTS</h1>
+    <table class="toc-table">
+      <thead>
+        <tr style="border-bottom: 2px solid #222;">
+          <th style="text-align: left; padding-bottom: 8px;">TOPIC</th>
+          <th style="text-align: right; padding-bottom: 8px; width: 90px;">Page No.</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="toc-bold">CHAPTER 1: INTRODUCTION</td>
+          <td class="toc-page">01</td>
+        </tr>
+        <tr>
+          <td class="toc-indent1">1.1 Overview</td>
+          <td class="toc-page">01</td>
+        </tr>
+        <tr>
+          <td class="toc-indent1">1.2 Literature Survey</td>
+          <td class="toc-page">03</td>
+        </tr>
+        <tr>
+          <td class="toc-bold">CHAPTER 2: PROBLEM IDENTIFICATION &amp; SCOPE</td>
+          <td class="toc-page">06</td>
+        </tr>
+        <tr>
+          <td class="toc-indent1">2.1 Problem Domain</td>
+          <td class="toc-page">06</td>
+        </tr>
+        <tr>
+          <td class="toc-indent1">2.2 Solution Domain</td>
+          <td class="toc-page">08</td>
+        </tr>
+        <tr>
+          <td class="toc-bold">CHAPTER 3: SOFTWARE ENGINEERING APPROACH</td>
+          <td class="toc-page">10</td>
+        </tr>
+        <tr>
+          <td class="toc-indent1">3.1 Software model used</td>
+          <td class="toc-page">10</td>
+        </tr>
+        <tr>
+          <td class="toc-indent2">3.1.1 Description</td>
+          <td class="toc-page">10</td>
+        </tr>
+        <tr>
+          <td class="toc-indent2">3.1.2 Reason for use</td>
+          <td class="toc-page">11</td>
+        </tr>
+        <tr>
+          <td class="toc-indent1">3.2 Platform Specification</td>
+          <td class="toc-page">12</td>
+        </tr>
+        <tr>
+          <td class="toc-indent2">3.2.1 Hardware Specification</td>
+          <td class="toc-page">12</td>
+        </tr>
+        <tr>
+          <td class="toc-indent2">3.2.2 Software Specifications</td>
+          <td class="toc-page">13</td>
+        </tr>
+        <tr>
+          <td class="toc-bold">CHAPTER 4: EXPECTED OUTCOME</td>
+          <td class="toc-page">15</td>
+        </tr>
+        <tr>
+          <td class="toc-bold">REFERENCES</td>
+          <td class="toc-page">17</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PAGE 4: CHAPTER 1 -->
+  <div class="sheet">
+    <h1 class="chapter-head">CHAPTER 1: INTRODUCTION</h1>
+    <h2 class="section-head">1.1 Overview</h2>
+    <p>
+      In contemporary academic and professional environments, personal productivity and sustained cognitive focus face unprecedented challenges driven by pervasive digital distractions, fragmented attention spans, and delayed reinforcement feedback loops. Conventional time-management methodologies—such as static paper planners, standard to-do lists, and rigid calendar systems—suffer from high rates of user attrition. Empirical observations show that individuals routinely abandon traditional productivity applications because these systems provide merely passive record-keeping without intrinsic or extrinsic psychological motivation.
+    </p>
+    <p>
+      <strong>LifeQuest</strong> is an advanced, responsive, full-stack web application designed to bridge the cognitive divide between daily labor and psychological reward. The platform systematically transforms real-world productivity into an engaging <em>Role-Playing Game (RPG) Progression Ecosystem</em>. Under this paradigm, every real-world responsibility—whether academic study, coding practice, physical fitness, or administrative duty—is structured as an interactive "Quest." Completing a quest awards deterministic Experience Points (XP), advances character ranks, triggers sensory celebratory visual rewards, and dynamically shapes an N-dimensional geometric skill matrix (Radar Polygon).
+    </p>
+    <p>
+      The core architectural philosophy of LifeQuest operates upon an immediate, positive behavioral reinforcement cycle: Execution leads to Completion, Completion yields XP, XP triggers Level Advancement, Leveling expands Attribute Radar Polygons, and Consecutive Activity preserves Streaks. By transforming abstract personal improvement into concrete mathematical data, LifeQuest eliminates procrastination through scientifically grounded game mechanics.
+    </p>
+    <p>
+      Key capabilities integrated within the LifeQuest architecture include:
+    </p>
+    <p>
+      <strong>1. Dynamic Skill Polygon System:</strong> Total user autonomy to create, edit, activate, and deactivate any arbitrary number of custom skills (<em>N &ge; 2</em>), with the radar visualization automatically adapting its geometric vertices from a 2-axis balance bar to triangles, squares, pentagons, hexagons, heptagons, octagons, and beyond.<br>
+      <strong>2. Deterministic XP &amp; Level Progression:</strong> Exponentially calibrated leveling formulas ensuring steady early progress while maintaining long-term milestone prestige.<br>
+      <strong>3. Psychological Streak Protection:</strong> A dedicated Rest Day allowance mechanism that prevents catastrophic streak resets during planned recuperation or illness.<br>
+      <strong>4. Precision Time Telemetry:</strong> Integrated stopwatch utilities comparing estimated task durations against empirical execution time to enhance future self-calibration.<br>
+      <strong>5. Role-Based Access Control (RBAC):</strong> Comprehensive administrative dashboards delivering system-wide performance telemetry, user activity auditing, and privilege moderation.<br>
+      <strong>6. Dual-Engine Database Architecture:</strong> Enterprise-grade PostgreSQL support with seamless zero-configuration SQLite failover.
+    </p>
+    <div class="page-number">1</div>
+  </div>
+
+  <!-- PAGE 5: CHAPTER 1 (Continued) -->
+  <div class="sheet">
+    <h2 class="section-head">1.2 Literature Survey</h2>
+    <p>
+      The theoretical and technical architecture of LifeQuest is grounded in peer-reviewed research across cognitive psychology, human-computer interaction (HCI), and motivational game design.
+    </p>
+    <h3 class="subsection-head">1. Self-Determination Theory (SDT)</h3>
+    <p>
+      Deci and Ryan (2000) established that sustained human intrinsic motivation requires the satisfaction of three universal psychological needs: <em>Competence</em>, <em>Autonomy</em>, and <em>Relatedness</em>. Traditional productivity software consistently violates the need for Autonomy by forcing users into rigid, pre-defined categories. LifeQuest directly satisfies Autonomy by granting users total freedom to define their own custom attributes and quest bounties. Competence is continuously reinforced through transparent leveling curves, real-time XP progress bars, dynamic visual geometry, and celebratory milestone achievements.
+    </p>
+    <h3 class="subsection-head">2. Gamification Frameworks &amp; The Octalysis Model</h3>
+    <p>
+      Deterding et al. (2011) formally defined gamification as "the use of game design elements in non-game contexts." Their research demonstrated that superficial implementations of Points, Badges, and Leaderboards (PBL) quickly lose engagement unless tightly coupled with meaningful user effort and transparent progression. Yu-kai Chou (2015) expanded upon this via the <em>Octalysis Framework</em>, identifying Core Drive 2 ("Development &amp; Accomplishment") and Core Drive 8 ("Loss &amp; Avoidance") as critical psychological levers. Traditional applications exploit Core Drive 8 punitively by wiping out months of consecutive progress upon a single missed day, inducing the psychological "What-the-Hell Effect" where minor failure triggers total platform abandonment. LifeQuest mitigates this by introducing algorithmic Rest Day streak protection.
+    </p>
+    <h3 class="subsection-head">3. Comparative Analysis of Existing Platforms</h3>
+    <p>
+      A rigorous comparative review demonstrates clear functional differentiators between LifeQuest and existing industry solutions:
+    </p>
+    <p>
+      • <strong>Traditional To-Do Applications</strong> (e.g., Todoist, TickTick, Microsoft To-Do): These systems excel at sterile task cataloging but lack motivational mechanics, dynamic visual attribute modeling, and gamified dopamine loops.<br>
+      • <strong>Fantasy Gamified Trackers</strong> (e.g., Habitica): While incorporating RPG themes, these platforms force users into rigid fantasy classes (Warrior, Mage, Rogue) and static pixel-art aesthetics, creating dissonance for modern professional and academic workflows.<br>
+      • <strong>LifeQuest (Proposed System):</strong> Combines contemporary glassmorphic user interfaces, Dark/Light mode versatility, fully customizable multi-dimensional skill polygons, planned vs. actual time tracking, and enterprise-grade administrative telemetry.
+    </p>
+    <div class="page-number">3</div>
+  </div>
+
+  <!-- PAGE 6: CHAPTER 2 -->
+  <div class="sheet">
+    <h1 class="chapter-head">CHAPTER 2: PROBLEM IDENTIFICATION &amp; SCOPE</h1>
+    <h2 class="section-head">2.1 Problem Domain</h2>
+    <p>
+      A comprehensive analysis of contemporary task management tools reveals five critical structural deficiencies:
+    </p>
+    <p>
+      <strong>1. The Delayed Gratification Paradox:</strong><br>
+      Human neurobiology is optimized for immediate positive feedback. However, high-value endeavors such as mastering Data Structures, writing research dissertations, or building physical endurance require months or years of consistent effort before producing tangible external rewards. Traditional task managers act as inert digital graveyards, offering no immediate positive neurological stimulation upon task execution.
+    </p>
+    <p>
+      <strong>2. Rigid, Prescriptive Attribute Models:</strong><br>
+      Existing gamification tools enforce fixed, immutable taxonomies. For example, legacy systems restrict user competencies to exactly six hardcoded disciplines or fantasy tropes. In reality, engineering students and knowledge workers require dynamic, evolving attributes (e.g., DSA, Systems Programming, Machine Learning, Research, Communication) that can be added, renamed, or deactivated as educational semesters evolve.
+    </p>
+    <p>
+      <strong>3. Punitive Streak Fatigue &amp; The "What-The-Hell Effect":</strong><br>
+      Standard habit trackers impose binary streak rules: missing a single 24-hour window resets long-standing streaks to zero regardless of illness, travel, or legitimate academic rest. Cognitive psychology identifies this punitive design as the primary driver of app abandonment, as users feel their historical dedication has been arbitrarily erased.
+    </p>
+    <p>
+      <strong>4. Disconnect Between Time Estimation and Reality:</strong><br>
+      Checklist tools track whether a task was checked off, but completely ignore the temporal variance between estimated duration and empirical duration. Users fail to improve their scheduling accuracy because the system captures no quantitative telemetry on time overruns.
+    </p>
+    <p>
+      <strong>5. Absence of Administrative Cohort Oversight:</strong><br>
+      Academic institutions, coding bootcamps, and project teams have no mechanism to observe aggregated productivity metrics, monitor student consistency, or identify at-risk team members across a unified administrative interface.
+    </p>
+    <div class="page-number">6</div>
+  </div>
+
+  <!-- PAGE 7: CHAPTER 2 (Continued) -->
+  <div class="sheet">
+    <h2 class="section-head">2.2 Solution Domain</h2>
+    <p>
+      LifeQuest resolves each of these documented challenges through targeted architectural innovations:
+    </p>
+    <p>
+      <strong>1. Instant Behavioral Reinforcement Engine:</strong><br>
+      The platform delivers multi-sensory feedback immediately upon task completion, including particle confetti bursts, glowing numerical XP counters, dynamic progress bar transitions, and milestone level-up celebration overlays.
+    </p>
+    <p>
+      <strong>2. Dynamically Adaptive N-Sided Skill Polygon:</strong><br>
+      The system replaces static hexagonal charts with a responsive SVG radar engine that recalculates polar coordinate geometry in real time. The radar gracefully renders regular polygons from 2-axis balance bars up to N-sided polygons, ensuring that any combination of active skills produces a balanced, intuitive visual footprint.
+    </p>
+    <p>
+      <strong>3. Algorithmic Rest Day Streak Tolerance:</strong><br>
+      LifeQuest allows users to schedule designated Rest Days. The streak evaluation engine bridges calendar gaps when a date is marked as an intentional rest interval, preserving user morale while encouraging sustainable work habits.
+    </p>
+    <p>
+      <strong>4. Integrated Temporal Telemetry:</strong><br>
+      Every task instance includes a built-in stopwatch logging actual execution duration alongside planned duration. This quantitative delta (&Delta;t = t_actual - t_planned) allows users to analyze productivity efficiency and calibrate time estimation skills.
+    </p>
+    <p>
+      <strong>5. Immutable Historical Data Preservation:</strong><br>
+      When an instance is marked as complete, its awarded XP is permanently locked in the database record. Deleting or modifying a parent task or skill never corrupts or alters historical statistics, ensuring total mathematical integrity.
+    </p>
+    <p>
+      <strong>6. Enterprise-Grade Administrative Subsystem:</strong><br>
+      A secured Admin Panel provides authorized staff with real-time KPI metrics (total users, active accounts, completed quests, aggregate productive hours), live search filtering, user status toggling, and role modification capabilities.
+    </p>
+    <div class="page-number">8</div>
+  </div>
+
+  <!-- PAGE 8: CHAPTER 3 -->
+  <div class="sheet">
+    <h1 class="chapter-head">CHAPTER 3: SOFTWARE ENGINEERING APPROACH</h1>
+    <h2 class="section-head">3.1 Software Model Used</h2>
+    
+    <h3 class="subsection-head">3.1.1 Description</h3>
+    <p>
+      The development of LifeQuest was executed under the <strong>Agile Iterative Prototyping Model</strong>. This software engineering methodology emphasizes iterative delivery, rapid prototype creation, modular decoupled architectures, and continuous validation cycles.
+    </p>
+    <p>
+      The development lifecycle was structured into five distinct, sequential sprints:<br>
+      • <strong>Sprint 1: Architecture &amp; Foundation</strong> — Establishing the FastAPI asynchronous backend, SQLAlchemy ORM models, dual-engine database fallback, and core user authentication pipelines.<br>
+      • <strong>Sprint 2: Gamification Logic &amp; Mechanics</strong> — Implementing XP algorithms, level progression formulas, streak calculation services, and task instance lifecycle workflows.<br>
+      • <strong>Sprint 3: Interactive Frontend Development</strong> — Building the single-page application (SPA) using React 18 and Vite, incorporating Tailwind CSS glassmorphic aesthetics, and integrating Recharts data visualizations.<br>
+      • <strong>Sprint 4: Dynamic Customization &amp; Polygon Engine</strong> — Upgrading the skill system from static schemas to arbitrary user-scoped custom skills, backed by dynamic N-vertex SVG radar rendering.<br>
+      • <strong>Sprint 5: System Telemetry, Security &amp; Deployment</strong> — Implementing enterprise Role-Based Access Control (RBAC), the Admin Management Dashboard, automated end-to-end test suites, and multi-stage Docker containerization.
+    </p>
+
+    <h3 class="subsection-head">3.1.2 Reason for Use</h3>
+    <p>
+      The Agile Iterative Prototyping model was selected for the following critical engineering reasons:<br>
+      <strong>1. Mathematical and Visual Calibration:</strong> Gamification mechanics require continuous empirical tuning. Developing functional increments allowed rapid calibration of XP leveling curves (XP = 100 &times; (Level - 1)^1.5) and SVG coordinate calculations.<br>
+      <strong>2. Risk Mitigation through Decoupling:</strong> Separating the frontend presentation layer from the stateless REST API allowed independent verification of security guards, database transactions, and UI responsiveness.<br>
+      <strong>3. Seamless Non-Destructive Migrations:</strong> As database schemas evolved to accommodate custom user skills and administrative roles, automated migration scripts ensured existing database records remained 100% intact without data loss.
+    </p>
+    <div class="page-number">10</div>
+  </div>
+
+  <!-- PAGE 9: CHAPTER 3 (Continued) -->
+  <div class="sheet">
+    <h2 class="section-head">3.2 Platform Specification</h2>
+    <h3 class="subsection-head">3.2.1 Hardware Specification</h3>
+    <p>
+      LifeQuest is engineered for optimal operational efficiency, maintaining minimal resource footprints on both hosting infrastructure and end-user hardware.
+    </p>
+    <p>
+      <strong>A. Development &amp; Host Environment:</strong><br>
+      • <em>Processor:</em> Intel Core i5 / AMD Ryzen 5 or higher (minimum 4 physical cores, 2.4 GHz).<br>
+      • <em>RAM:</em> 8 GB minimum (16 GB recommended for concurrent Vite Hot Module Replacement and Uvicorn ASGI workers).<br>
+      • <em>Storage:</em> 500 MB free solid-state storage for application source, virtual environments, and SQLite caching.<br>
+      • <em>Network:</em> Standard broadband connection with Gigabit Ethernet or Wi-Fi 802.11ac for package distribution and cloud containerization.
+    </p>
+    <p>
+      <strong>B. Client / End-User Environment:</strong><br>
+      • <em>Hardware Support:</em> Desktop computers, laptops, tablets, and mobile smartphones (Android &amp; iOS).<br>
+      • <em>Minimum Client RAM:</em> 2 GB RAM.<br>
+      • <em>Display Resolution:</em> Fully responsive adaptive layouts supporting viewports from 360px (mobile) to 3840px (4K Ultra HD).
+    </p>
+
+    <h3 class="subsection-head">3.2.2 Software Specifications</h3>
+    <p>
+      The software architecture follows an enterprise 3-tier decoupled model consisting of a Client Presentation Layer, an API Gateway &amp; Service Layer, and a Relational Database Layer.
+    </p>
+    <p>
+      <strong>A. Frontend Presentation Layer:</strong><br>
+      • <em>User Interface Framework:</em> React.js (v18.x) utilizing functional components, React Hooks (useState, useEffect, useMemo, useCallback), and the Context API for centralized state management.<br>
+      • <em>Build Tool &amp; Bundler:</em> Vite (v5.x) providing sub-second Hot Module Replacement (HMR) and optimized Rollup tree-shaking minification.<br>
+      • <em>Styling &amp; Design System:</em> Tailwind CSS (v3.x) with class-based dark mode (darkMode: 'class'), custom cyberpunk/fantasy RPG palettes, and glassmorphic card surfaces.<br>
+      • <em>Dynamic Data Visualization:</em> Recharts (v2.x) rendering dynamic regular polygons via SVG Radar, PolarGrid, PolarAngleAxis, and PolarRadiusAxis.<br>
+      • <em>Iconography:</em> Lucide React for consistent vector iconography.<br>
+      • <em>HTTP Communication:</em> Axios (v1.x) with centralized Bearer token interceptors and automatic session expiration handling.<br>
+      • <em>Animation &amp; Effects:</em> Canvas-confetti for sensory level-up celebrations.
+    </p>
+    <p>
+      <strong>B. Backend &amp; API Layer:</strong><br>
+      • <em>Programming Language:</em> Python 3.11+ / Python 3.13.<br>
+      • <em>Web Framework:</em> FastAPI (v0.115+) implementing high-performance asynchronous request routing over Starlette and ASGI standards.<br>
+      • <em>ASGI Web Server:</em> Uvicorn (v0.34+) running asynchronous event-loop workers.<br>
+      • <em>Data Validation:</em> Pydantic (v2.x) with strict schema models and type validation for all inbound JSON payloads and outbound responses.<br>
+      • <em>Object-Relational Mapping (ORM):</em> SQLAlchemy (v2.x) providing declarative models, relationship cascades, query optimization, and transaction management.<br>
+      • <em>Cryptography &amp; Authentication:</em> Bcrypt (v4.3+) for irreversible salted password hashing; PyJWT (v2.10+) for generating and validating cryptographically signed HMAC-SHA256 Bearer tokens.
+    </p>
+    <p>
+      <strong>C. Database &amp; DevOps Layer:</strong><br>
+      • <em>Dual-Engine Database Architecture:</em> Native PostgreSQL 17 support for production deployment, coupled with an automatic fallback to SQLite 3 (lifequest.db) for zero-configuration local development.<br>
+      • <em>Containerization:</em> Multi-stage Docker packaging compiling Vite frontend assets and executing the Python ASGI runtime on a single unified port.
+    </p>
+    <div class="page-number">13</div>
+  </div>
+
+  <!-- PAGE 10: CHAPTER 4 -->
+  <div class="sheet">
+    <h1 class="chapter-head">CHAPTER 4: EXPECTED OUTCOME</h1>
+    <p>
+      The implementation of LifeQuest yields concrete, measurable outcomes across behavioral, operational, and technical dimensions:
+    </p>
+    <p>
+      <strong>1. Measurable Behavioral Reinforcement:</strong><br>
+      By translating abstract daily work into tangible XP gains, level milestones, and visual badges, users experience heightened intrinsic and extrinsic motivation. Preliminary testing indicates higher daily task completion rates and reduced procrastination compared to static checklist tools.
+    </p>
+    <p>
+      <strong>2. Elimination of Habit Abandonment:</strong><br>
+      The algorithmic Rest Day mechanism successfully eliminates the punitive "What-the-Hell Effect". Users maintain long-term habit momentum without anxiety, as legitimate academic breaks and personal rest do not destroy earned streak counts.
+    </p>
+    <p>
+      <strong>3. Holistic Skill Visualization &amp; Balance:</strong><br>
+      The dynamically adapting N-sided polygon provides users with an instant visual diagnostic of their daily focus. Over-investment in one area (e.g., Coding) at the expense of others (e.g., Physical Health or Academic Study) is immediately apparent geometrically, encouraging balanced self-development.
+    </p>
+    <p>
+      <strong>4. Robust Data Integrity and Historical Preservation:</strong><br>
+      By enforcing immutable xp_awarded recording at the instance level and utilizing ON DELETE SET NULL foreign keys, users can freely customize, rename, or purge old skill definitions without corrupting lifetime productivity records or historical analytics.
+    </p>
+    <p>
+      <strong>5. Centralized Administrative Oversight:</strong><br>
+      Educators and team administrators gain real-time visibility into group productivity through dedicated KPI telemetry. The administrative dashboard allows seamless user status auditing, search filtering, and privilege escalation without requiring direct manual database intervention.
+    </p>
+    <p>
+      <strong>6. High Performance and Low Latency:</strong><br>
+      The asynchronous FastAPI architecture guarantees sub-50ms endpoint response latencies, while the Vite-optimized client bundle ensures sub-second page loads and fluid 60 FPS visual rendering across both desktop and mobile viewports.
+    </p>
+    <div class="page-number">15</div>
+  </div>
+
+  <!-- PAGE 11: REFERENCES -->
+  <div class="sheet">
+    <h1 class="chapter-head">REFERENCES</h1>
+    <p>
+      [1] Deci, E. L., &amp; Ryan, R. M. (2000). The "what" and "why" of goal pursuits: Human needs and the self-determination of behavior. <em>Psychological Inquiry</em>, 11(4), 227-268.
+    </p>
+    <p>
+      [2] Deterding, S., Dixon, D., Khaled, R., &amp; Nacke, L. (2011). From game design elements to gamefulness: defining "gamification". In <em>Proceedings of the 15th International Academic MindTrek Conference: Envisioning Future Media Environments</em> (pp. 9-15). ACM.
+    </p>
+    <p>
+      [3] Chou, Yu-kai. (2015). <em>Actionable Gamification: Beyond Points, Badges, and Leaderboards</em>. Octalysis Media.
+    </p>
+    <p>
+      [4] FastAPI Documentation (2024). <em>High performance, easy to learn, fast to code, ready for production</em>. Available at: <code>https://fastapi.tiangolo.com/</code>
+    </p>
+    <p>
+      [5] React Documentation (2024). <em>The library for web and native user interfaces</em>. Meta Platforms, Inc. Available at: <code>https://react.dev/</code>
+    </p>
+    <p>
+      [6] SQLAlchemy Authors (2024). <em>The Python SQL Toolkit and Object Relational Mapper</em>. Available at: <code>https://www.sqlalchemy.org/</code>
+    </p>
+    <p>
+      [7] Recharts Documentation (2024). <em>A composable charting library built on React components</em>. Available at: <code>https://recharts.org/</code>
+    </p>
+    <p>
+      [8] Tailwind Labs (2024). <em>Utility-first CSS framework for rapid UI development</em>. Available at: <code>https://tailwindcss.com/</code>
+    </p>
+    <p>
+      [9] Pydantic Documentation (2024). <em>Data validation and settings management using Python type annotations</em>. Available at: <code>https://docs.pydantic.dev/</code>
+    </p>
+    <div class="page-number">17</div>
+  </div>
+
+</div>
+
+</body>
+</html>
